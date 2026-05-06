@@ -1,0 +1,21 @@
+Ho eseguito il progamma su 100 vettori di dimensione crescente, che va da 1 a 100 (incluso).
+Questo è stato fatto su 6 algoritmi di ordinamento: Bubblesort, Insertionsort, Selectionsort,
+Mergesort, Quicksort, e std::sort (presente nella libreria <algorithm>).
+I primi tre algoritmi sono quadratici, mentre gli ultimi tre sono logaritmici.
+
+In dimensioni basse, ovvero tra 1 e 30,l'algoritmo std::sort è il più lento, seguito poi da MergeSort e QuickSort, 
+gli algoritmi logaritmici rimangono infatti più lenti degli algoritmi quadratici: Bubblesort, Insertionsort e 
+Selectionsort, dove Insertionsort risulta il più veloce.
+
+Dopo la dimensione 30, invece, si vede che gli algoritmi logaritmici cominciano ad avere tempi 
+più vicini agli algoritmi quadratici, possiamo quindi ipotizzare che la soglia sotto la quale gli 
+algoritmi quadratici sono più veloci degli algoritmi logaritmici esiete ed è intorno a 30.
+
+Si andra quindi ad implementare una nuova versione di Quicksort, chiamata quicksort_soglia, che sotto tale soglia
+(scelgo dimensione 30) implementi l'algoritmo quadratico più veloce, che nel nostro caso è l'Insertionsort.
+
+Una volta implementato tale codice, si può osservare che l'algoritmo Quicksort comincia a essere molto
+più vicino ai tempi degli algoritmi quadratici, alcuna volte è anche più veloce (in dimensioni basse). 
+Risulta comunque sempre leggermente più lento dell'Insertionsor. 
+Superata la soglia torna a comportarsi come un tipico algoritmo logaritmico, e in dimensioni vicine a 100 spesso 
+è l'algoritmo più veloce.
