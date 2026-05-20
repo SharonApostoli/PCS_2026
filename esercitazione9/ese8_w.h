@@ -105,7 +105,7 @@ public:
     }
 
     //add_edge() aggiungere un arco
-    void add_edge(T a, T b, int w){
+    void add_edge(T a, T b, int w = 1){
         //creo l'oggetto arco
         unidirected_edge<T> arco(a, b);
         //controllo se l'arco è gia presente tra gli archi che ho

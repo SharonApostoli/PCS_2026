@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 #include <limits>
-#include "ese8.h"
+#include "ese8_w.h"
 
 //FIFO = First in First Out
 //il primo elemento messo sarà il primo elemnento ad uscire
@@ -75,7 +75,7 @@ unidirected_graph<int> graph_visit(const unidirected_graph<int>& G, int v,conten
 
     while(!tipo.empty()){
         int node = tipo.get();
-        for(int vicino : G.neighbours(node)){
+        for(auto [vicino, peso] : G.neighbours(node)){
             if(!visited.count(vicino)){
                 visited.insert(vicino);
                 tree.add_edge(node, vicino);
@@ -88,7 +88,7 @@ unidirected_graph<int> graph_visit(const unidirected_graph<int>& G, int v,conten
 
 void recursive_dfs_aiuto(const unidirected_graph<int>& G, int v, unidirected_graph<int>& tree, std::set<int>& visited){
     visited.insert(v);
-    for(int vicino : G.neighbours(v)){
+    for(auto [vicino, peso] : G.neighbours(v)){
         if(!visited.count(vicino)){
             tree.add_edge(v, vicino);
             recursive_dfs_aiuto(G, vicino, tree, visited);
@@ -114,43 +114,21 @@ Questo lo facciamo nella creaione di una nuova classe: weighted_graph.
 Cosi facendo, si implementano i pesi degli archi e si può quindi sfruttare
 l'lagoritmo di Dijkstra */
 
-class weighted_graph{
-    std::map<int, std::vector<std::pair<int,int>>> adiacenza_w;
-
-public:
-    void add_edge_w(int u, int v, int w){
-        adiacenza_w[u].push_back({v, w});
-        adiacenza_w[v].push_back({u, w});
-    }
-
-    const std::vector<std::pair<int,int>>& neighbours_w(int u) const{
-        return adiacenza_w.at(u);
-    }
-
-    std::set<int> all_nodes() const{
-        std::set<int> nodi;
-        for(const auto& p : adiacenza_w){
-            nodi.insert(p.first);
-        }
-        return nodi;
-    }
-};
-
-
-std::map<int, int> dijkstra(const weighted_graph& G, int v){
+template<typename T>
+std::map<T, int> dijkstra(const unidirected_graph<T>& G, T v){
     const int INF = std::numeric_limits<int>::max();
 
     //distanza minima dal nodo di partenza v
-    std::map<int, int> dist;
+    std::map<T, int> dist;
 
     //inizializziamo tutti i nodi a dist. infinita
-    for(int nodo : G.all_nodes()){
+    for(T nodo : G.all_nodes()){
         dist[nodo] = INF;
     }
 
     dist[v] = 0;
 
-    using NodeDistance = std::pair<int, int>;
+    using NodeDistance = std::pair<int, T>;
 
     std::priority_queue<NodeDistance, std::vector<NodeDistance>, std::greater<NodeDistance>> pq;
 
@@ -161,11 +139,11 @@ std::map<int, int> dijkstra(const weighted_graph& G, int v){
         pq.pop();
 
         //ignora entry obsolete
-        if(current_dist < dist[u]){
+        if(current_dist > dist[u]){
             continue;
         }
 
-        for(auto [vicino, weight] : G.neighbours_w(u)){
+        for(auto [vicino, weight] : G.neighbours(u)){
             int new_dist = dist[u] + weight;
             if(new_dist < dist[vicino]){
                 dist[vicino] = new_dist;

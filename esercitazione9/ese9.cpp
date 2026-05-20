@@ -28,15 +28,15 @@ int main(){
     export_dot(dfs_iG, "dfs_i.dot");
 
     //Dijkstra
-    weighted_graph Gd;
+    unidirected_graph<int> Gd;
 
     //Quando aggiungo un arco ho 3 parametri: il nodo di partenza, quello di arrivo e il peso
-    Gd.add_edge_w(1, 2, 4);
-    Gd.add_edge_w(1, 3, 1);
-    Gd.add_edge_w(3, 2, 2);
-    Gd.add_edge_w(3, 4, 5);
-    Gd.add_edge_w(4, 5, 2);
-    Gd.add_edge_w(5, 6, 1);
+    Gd.add_edge(1, 2, 4);
+    Gd.add_edge(1, 3, 1);
+    Gd.add_edge(3, 2, 2);
+    Gd.add_edge(3, 4, 5);
+    Gd.add_edge(4, 5, 2);
+    Gd.add_edge(5, 6, 1);
 
     auto dist = dijkstra(Gd, 1);
 
