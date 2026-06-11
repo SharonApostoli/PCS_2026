@@ -1,1 +1,25 @@
 Qui in seguito una lista dei problemi riscontrati:
+1 - Come implementare il metodo template<typename T> nella 
+    lettura del file per far si che ogni nuova riga quando
+    si legge la prima variabbile, si capisca se è un
+    resistore o un generatore.
+    Nell'esercitazione 9 abbiamo gia affrotnato un problema
+    simile, dove dovevamo fare una visita di un grafo basandoci
+    sul tipo degli elementi presenti.
+    In quel caso i metodi di tutte e due le classi erano chiamati
+    allo stesso modo e poi abbiamo usato il 
+    template<typename contenitore> che capiva se si trattava 
+    di uno stack o un queue.
+    Qui la distinzione serve per poter fare correttamente i calcoli
+    in seguito.
+    (Per ora sorvolo momentaneamente questo problema e continuo 
+    a implemenare i diversi metodi delle scorse esercitazioni per 
+    rappresentare matrici, ecc.).
+(11/06/26)
+    Il problema per questo sta nel trovare un modo per collegare il 
+    nome R o V all'arco. L'obiettivo sarebbe quello di riuscire 
+    tramite una versione modificata del dfs di visitare tutto il grafo
+    e poi man mano che sei visitano i gli archi, vedere se ad esso è
+    associato un R o un V e poi mettere quello che sto cercanod in un
+    vettore, ordinarlo ed infine trasformarlo in una matrice diagonale
+    con la funzione .asDiagonal().
