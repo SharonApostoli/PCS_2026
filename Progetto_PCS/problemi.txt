@@ -1,3 +1,4 @@
+(5/06/2026)
 Qui in seguito una lista dei problemi riscontrati:
 1 - Come implementare il metodo template<typename T> nella 
     lettura del file per far si che ogni nuova riga quando
@@ -23,3 +24,15 @@ Qui in seguito una lista dei problemi riscontrati:
     associato un R o un V e poi mettere quello che sto cercanod in un
     vettore, ordinarlo ed infine trasformarlo in una matrice diagonale
     con la funzione .asDiagonal().
+(12/06/26)
+    Per poter collegare il nome "R" o "V" ad un arco avevo pensato di
+    aggiungere al grafo una mappa, ma ciò lasciava fuori il valore
+    degli eventuali resistori o generatori. Quindi piuttosto che creare 
+    un'altra mappa e rendere tutto più difficile, creo una struttura
+    che contiene nome e valore, che poi colleghero agli archi. 
+    Ho ovviamente dovuto modificare la funzione add_edge, facendo
+    si che ogni qual volta io voglia aggiungere un edge devo anche dire 
+    se c'è un resistore o un generatore e il valore di quest ultimo.
+    Non ho però ancora messo il caso in cui non vengano specificati
+    (potrebe succedere che in un arco non ci sia niente? devo controllare
+    bene il file del progetto).

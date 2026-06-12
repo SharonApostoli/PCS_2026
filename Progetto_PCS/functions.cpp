@@ -8,6 +8,11 @@
 
 #include "progetto.h"
 
+template<typename T>
+struct Componente{
+    std::string nome;
+    T valore;
+}
 
 void read_file(const std::string filename, unidirected_graph<T>& G){
     std::ifstream ifs(filename);
@@ -35,6 +40,7 @@ void read_file(const std::string filename, unidirected_graph<T>& G){
     file.close();
 }
 
+template<typename T>
 class unidirected_edge{
     T node_f;
     T node_t;
@@ -83,7 +89,7 @@ template<typename T>
 class unidirected_graph{
     std::map<T, std::vector<std::pair<T, int>>> adiacenza;
     std::set<unidirected_edge<T>> edge;
-    std::string name;
+    std::map<unidirected_edge<T>, Componente> components;
 public:
     unidirected_graph(){
     };
@@ -91,10 +97,6 @@ public:
     unidirected_graph(const unidirected_graph& other){
         adiacenza = other.adiacenza;
         edge = other.edge;
-    }
-
-    std::string get_name() const{
-        return name;
     }
 
     std::vector<std::pair<T,int>> neighbours(const T& nodo) const{
@@ -105,12 +107,13 @@ public:
         return key -> second;
     }
 
-    void add_edge(T a, T b, int w = 1){
+    void add_edge(T a, T b, const std::string& nome, T valore){
         unidirected_edge<T> arco(a, b);
         if(edge.find(arco) != edge.end()){
             return;
         }
         edge.insert(arco);
+        components[arco] = {nome, valore};
         adiacenza[a].push_back({b, w});
         adiacenza[b].push_back({a, w});
     }
@@ -156,41 +159,24 @@ public:
         }
         return archi;  
     }
+
+    std::vector<T> valori_res() const{
+        std::vector<T> valori;
+
+        for(const auto& [arco, componente] : components)[
+            if(componente.nome[0] == 'R'){
+                valori.push_back(componente.valore);
+            }
+        ]
+        return valore;
+    }
 };
 
-//presa da es_9 e modificata per cercare gli archi con i nomi
-Eigen::VectorXd graph_visit_dfs_search(const unidirected_graph<double>& G, int v, char ){
-    
-    std::set<int> visited;
-    std::vector<int> stack;
-    std::vector<int> selected;
 
-    visited.insert(v);
-    stack.push_back(v);
-
-    while(!stack.empty()){
-        int node = stack.back();
-        stack.pop_back();
-
-        std::string nome = G.get_name();
-
-        if(nome[0] == type){
-            selected.push_back()
-        }
-
-        for(auto [vicino, peso] : G.neighbours(node)){
-            if(!visited.count(vicino)){
-                visited.insert(vicino);
-                stack.push_back(vicino);
-            }
-        }
-    }
-    
-}
-
+typename<template T>
 Eigen::MatrixXd Rmatrix(const unidirected_graph& G){
-
-    std::vector resistenze 
+    std::vector<T> resistori = G.valori_res();
+    
     
     return resist.asDiagonal();
 }

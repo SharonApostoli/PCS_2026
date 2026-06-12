@@ -6,6 +6,12 @@
 
 #include <string>
 
+template<typename T>
+struct Componente{
+    std::string nome;
+    T valore;
+}
+
 //Funzione per lettura e immagazzinazione dati dal file netlist
 void read_file(std::string filename);
 
@@ -28,16 +34,17 @@ template<typename T>
 class unidirected_graph{
     std::map<T, std::vector<std::pair<T, int>>> adiacenza;
     std::set<unidirected_edge<T>> edge;
-    std::string name;
+    std::map<unidirected_edge<T>, Componente> components;
 public:
     unidirected_graph();
     unidirected_graph(const unidirected_graph& other);
     std::vector<std::pair<T,int>> neighbours(const T& nodo) const
-    void add_edge(T a, T b, int w = 1);
+    void add_edge(T a, T b, const std::string& nome, T valore);
     std::set<unidirected_edge<T>> all_edges() const;
     std::set<T> all_nodes() const;
     int edge_number(const unidirected_edge<T> & arco) const;
     std::optional<unidirected_edge<T>> edge_at(int num) const;
     unidirected_graph operator-(const unidirected_graph& other) const;
+    std::vector<T> valori_res() const;
 }
 
