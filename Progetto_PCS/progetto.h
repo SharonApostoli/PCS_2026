@@ -1,34 +1,70 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
+#include <optional>
 #include <string>
 #include <map>
 #include <set>
 
 #include <string>
 
-template<typename T>
+
 struct Componente{
     std::string nome;
-    T valore;
-}
+    double valore;
+    int nodo_pos;
+};
 
 //Funzione per lettura e immagazzinazione dati dal file netlist
-void read_file(std::string filename);
+template<typename T>
+void read_file(const std::string filename, unidirected_graph<T>& G);
 
 template<typename T>
 class unidirected_edge{
     T node_f;
     T node_t;
+
 public:
-    unidirected_edge(const T& partenza, const T& arrivo);
-    T from() const;
-    T to() const;
-    bool operator< (const unidirected_edge& other) const;
-    bool operator== (const unidirected_edge& other) const;
+    unidirected_edge(const T& partenza, const T& arrivo){
+        if(partenza < arrivo){
+            node_f = partenza;
+            node_t = arrivo;
+        }else{
+            node_f = arrivo;
+            node_t = partenza;
+        }
+    }
+
+    T from() const {
+        return node_f;
+    }
+
+    T to() const {
+        return node_t;
+    }
+
+    bool operator<(const unidirected_edge& other) const {
+        unidirected_edge ret = *this;
+        if(ret.node_f != other.node_f){
+            return ret.node_f < other.node_f;
+        }
+        return ret.node_t < other.node_t;
+    }
+
+    bool operator==(const unidirected_edge& other) const {
+        unidirected_edge ret = *this;
+        return (ret.node_f == other.node_f && ret.node_t == other.node_t);
+    }
 };
 
+//operator<<
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const unidirected_edge<T>& edge)
+std::ostream& operator<<(std::ostream& os, const unidirected_edge<T>& edge){
+    os << "(" << edge.from() << ", " << edge.to() << ")";
+    return os;
+};
+
 
 template<typename T>
 class unidirected_graph{
@@ -36,15 +72,88 @@ class unidirected_graph{
     std::set<unidirected_edge<T>> edge;
     std::map<unidirected_edge<T>, Componente> components;
 public:
-    unidirected_graph();
-    unidirected_graph(const unidirected_graph& other);
-    std::vector<std::pair<T,int>> neighbours(const T& nodo) const
-    void add_edge(T a, T b, const std::string& nome, T valore);
-    std::set<unidirected_edge<T>> all_edges() const;
-    std::set<T> all_nodes() const;
-    int edge_number(const unidirected_edge<T> & arco) const;
-    std::optional<unidirected_edge<T>> edge_at(int num) const;
-    unidirected_graph operator-(const unidirected_graph& other) const;
-    std::vector<T> valori_res() const;
-}
+    unidirected_graph(){
+    };
 
+    unidirected_graph(const unidirected_graph& other){
+        adiacenza = other.adiacenza;
+        edge = other.edge;
+        components = other.components;
+    }
+
+    std::vector<std::pair<T,int>> neighbours(const T& nodo) const{
+        auto key = adiacenza.find(nodo);
+        if(key == adiacenza.end()){
+            return {};
+        }
+        return key -> second;
+    }
+
+    void add_edge(const T& a,const T& b, const std::string& nome, T valore){
+        unidirected_edge<T> arco(a, b);
+        if(edge.find(arco) != edge.end()){
+            return;
+        }
+        edge.insert(arco);
+
+        int w = edge_number(arco);
+        components[arco] = Componente(nome, valore, nodo_pos);
+        adiacenza[a].push_back({b, w});
+        adiacenza[b].push_back({a, w});
+    }
+
+    std::set<unidirected_edge<T>> all_edges() const{
+        return edge;
+    }
+
+    std::set<T> all_nodes() const{
+        std::set<T> nodi;
+        for(const auto& pair : adiacenza){
+            nodi.insert(pair.first);
+        }
+        return nodi;
+    }
+
+    int edge_number(const unidirected_edge<T> & arco) const{
+        int pos = 0;
+        for(const unidirected_edge<T>& i : edge){
+            if(i == arco){
+                return pos;
+            }
+            pos++;
+        }
+        return -1;
+    }
+
+    std::optional<unidirected_edge<T>> edge_at(int num) const{
+        if(num < 0 || num >= edge.size()){
+            return std::nullopt;
+        }
+        auto it = edge.begin();
+        std::advance(it, num);
+        return *it;
+    }
+
+    unidirected_graph operator-(const unidirected_graph& other) const{
+        unidirected_graph archi;
+        for(const unidirected_edge<T>& el : edge){
+            if(other.edge.find(el) == other.edge.end()){
+                Componente comp = components.at(el);
+                archi.add_edge(el.from(), el.to(), comp.nome, comp.valore);
+            }
+        }
+        return archi;  
+    }
+
+    std::vector<double> valori_res() const{
+        std::vector<double> valori;
+
+        for(const auto& [arco, componente] : components){
+            if(componente.nome[0] == 'R'){
+                valori.push_back(componente.valore);
+            }
+        }
+        return valori;
+    }
+
+};

@@ -36,3 +36,21 @@ Qui in seguito una lista dei problemi riscontrati:
     Non ho però ancora messo il caso in cui non vengano specificati
     (potrebe succedere che in un arco non ci sia niente? devo controllare
     bene il file del progetto).
+(08/07/2026)
+    Dopo tanto tanto tempo che non ho aggiunto niente al mio codice,
+    ho dovuto rileggere tutto da capo e ho notato diversi errori
+    dovuti dal fatto che fino ad ora ho semplicemente fatto copia e 
+    incolla delle strutture che avevamo usato nelle esercitazioni passate,
+    senza avere un piano chiaro per il progetto.
+    Quindi: oggi mi concentrero sul cercare di riscrivere quello che ho
+    gia scritto in modo corretto, cosi che in futuro non devo preocuparmene.
+    Ho intanto corretto diversi errori di scrittura, aggiunto ";" dove
+    mancavano e aggiunto altre cose dove mi ero scordata.
+    Inoltre ho deciso di cercare di iniziare a definire lo struct Componente.
+    Sto cercando di riuscire ad aggiungere tutte la parti che posso riutilizzare
+    dalle vecchie esercitazioni cosi che poi inizio a lavorare alla funzione
+    read_file, che mi serve per ottenere i dati. Poi da li, svilupperò tutte
+    le diverse funzioni più complesse che mi serviranno.
+    
+   
+    
