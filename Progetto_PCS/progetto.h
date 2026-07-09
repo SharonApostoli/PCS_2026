@@ -14,10 +14,22 @@ struct Componente{
     std::string nome;
     double valore;
     int nodo_pos;
+
+    //costruttore di default
+    Componente(){
+        nome = "";
+        valore = 0.0;
+        nodo_pos = 0;
+    }
+
+    Componente(const std::string& n, double v, int np = 0){
+        nome = n;
+        valore = v;
+        nodo_pos = np;
+    }
 };
 
 //Funzione per lettura e immagazzinazione dati dal file netlist
-template<typename T>
 void read_file(const std::string filename, unidirected_graph<T>& G);
 
 template<typename T>
@@ -89,12 +101,14 @@ public:
         return key -> second;
     }
 
-    void add_edge(const T& a,const T& b, const std::string& nome, T valore){
+    void add_edge(const T& a,const T& b, const std::string& nome, double valore){
         unidirected_edge<T> arco(a, b);
         if(edge.find(arco) != edge.end()){
             return;
         }
         edge.insert(arco);
+
+        components[arco] = Componente(nome, valore, nodo_pos)
 
         int w = edge_number(arco);
         components[arco] = Componente(nome, valore, nodo_pos);
@@ -154,6 +168,10 @@ public:
             }
         }
         return valori;
+    }
+
+    Componente get_componente(const unidirected_edge<T>& edge) const{
+        
     }
 
 };

@@ -51,6 +51,20 @@ Qui in seguito una lista dei problemi riscontrati:
     dalle vecchie esercitazioni cosi che poi inizio a lavorare alla funzione
     read_file, che mi serve per ottenere i dati. Poi da li, svilupperò tutte
     le diverse funzioni più complesse che mi serviranno.
+(09/07/2026)
+    Oggi ho iniziato a lavorare per implementare lo Struct Componente:
+    ho quindi aggiunto i costruttori per quando viene chiamato, ho dovuto 
+    modificare la funzione add_edge per far si che funzioni con i componenti.
+    Poi, ho inizato finendo a mettere apposto la funzione reaf_file, cosi che
+    almeno riesco a leggere i dati dal file.
+    Adesso iniziamo con implementare la DFS, partendo dalla struttura usata
+    nell'esercitazione 9. Posso riusare la stessa struttura, ma devo modificare
+    la linea di codice con add_edge. Adesso, quando aggiungo un arco, devo anche
+    aggiungere il nome, il valore e il nodo_pos. Il problema adesso è riuscire a 
+    avere questi dati a partire dall'arco, qui posso cominciare a utilizzare
+    Componente.
+    Il problema è adesso creare un metodo che riesce a fare proprio questo.
     
+
    
     
