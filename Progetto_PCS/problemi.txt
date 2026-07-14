@@ -64,7 +64,22 @@ Qui in seguito una lista dei problemi riscontrati:
     avere questi dati a partire dall'arco, qui posso cominciare a utilizzare
     Componente.
     Il problema è adesso creare un metodo che riesce a fare proprio questo.
-    
-
+(14/072026)
+    Ho pensato di aggiungere direttamente un metodo alla struttura
+    unidirected_graph chiamata get_componente che ovviamente restituisce la
+    struttura componente a partire o da un arco, o da due nodi, in modo da coprire
+    entrambi i casi. Questo è stato possibile sfruttando il fatto che components in 
+    unidirected_graph è una std::map e quindi posso sfruttarne l'at.
+    Tornando alla funzione dfs, procediamo con il cercare i cammini tramite questo
+    algoritmo.
+    Come da consegna: creiamo in albero di supporto T con la DFS, poi
+    calcolo il coalbero come C=G\T (riutilizziamo l'operator-), infine ciascun lato
+    del coalbero se reinserito in T chiude un ciclo che rappresenta una maglia del
+    circuito.
+    Siccome vogliamo trovare i cammini, dobbiamo trovare un modo per controllare se 
+    esiste un cammino da un nodo ad un altro, questo lo posso fare sfruttando la DFS
+    per cercare nell'albero. Poi posso creare una struttura dove tengo conto del "cammino"
+    fatto e cosi vedo se il cammino esiste e se esiste riesco a dire quale è il "percorso"
+    da seguire.
    
     

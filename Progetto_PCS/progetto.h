@@ -6,7 +6,6 @@
 #include <string>
 #include <map>
 #include <set>
-
 #include <string>
 
 
@@ -171,7 +170,11 @@ public:
     }
 
     Componente get_componente(const unidirected_edge<T>& edge) const{
-        
+        return components.at(edge);
     }
 
+    //Questo mi serve nel caso in cui gli passo i nodi
+    Componente get_componente(const T& from, const T& to) const{
+        return get_componente(unidirected_edge<T>(from, to));
+    }
 };

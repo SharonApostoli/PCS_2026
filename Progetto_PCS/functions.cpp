@@ -42,7 +42,8 @@ void recursive_dfs_aiuto(const unidirected_graph<int>& G, int v, unidirected_gra
     visited.insert(v);
     for(auto [vicino, peso] : G.neighbours(v)){
         if(!visited.count(vicino)){
-            tree.add_edge(v, vicino, G.get_componente);
+            Componente Gcomp = G.get_componente(v, vicino);
+            tree.add_edge(v, vicino, Gcomp.nome, Gcomp.valore, Gcomp.nodo_pos);
             recursive_dfs_aiuto(G, vicino, tree, visited);
         }
     }
@@ -66,3 +67,5 @@ Eigen::MatrixXd Rmatrix(const unidirected_graph<T>& G){
     
     return resist.asDiagonal();
 }
+
+find_path(const unidirected_graph<int>& T, int u, int v, )
