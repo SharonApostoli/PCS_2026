@@ -58,6 +58,59 @@ unidirected_graph<int> recursive_dfs(const unidirected_graph<int>& G, int v){
     return tree;
 }
 
+//Cerchiamo un cammino
+//Funzione aiuto
+bool find_path_aiuto(const unidirected_graph<int>& T, int u, int v, std::vector<int>& path, std::set<int>& visited){
+    //Qui segno u come visitato
+    visited.insert(u);
+    //Qui segno u come inizio del mio ipotetico cammino
+    path.push_back(u);
+
+    //Se sono arrivata a v: finito, esiste cammino tra u e v e restituisco vero
+    if(u == v){
+        return true;
+    }
+
+    //Se no sono arrivata a v: esploro i nodi che non ho ancora visitato
+    for(auto [vicino, w] : T.neighbours(u)){
+        if(!visited.count(vicino)){
+            if(find_path_aiuto(T, vicino, v, path, visited)){
+                return true;
+            }
+        }
+    }
+
+    //Se invece arrivo qui, ho esplorato tutti i nodi e v non c'è.
+    path.pop_back();
+    return false;
+}
+//Funzione principale
+std::vector<int> find_path(const unidirected_graph<int>& T, int u, int v, ){
+    std::vector<int> path;
+    std::set<int> visited;
+
+    find_path_aiuto(T, u, v, path, visited);
+    //Qui restituisco path: l'eventuale cammino tra u e v, se eiste.
+    return path;
+}
+
+cicli_fondamentali_dfs(const unidirected_graph<int>& G){
+    //Cominciamo con la creazione dell'abero di supporto (da definire come trovare v)
+    unidirected_graph<int> T = recursive_dfs(G, v);
+
+    //Coalbero
+    unidirected_graph<int> C = G - T; 
+
+    /*Per ogni arco del coalbero C trovo il perorso in T tale che 
+    quel percorso + l'arco = ciclo (= maglia del circuito)*/
+    for(const auto& edge : C.all_edges()){
+
+    }
+
+}
+
+
+
 
 
 template<typename T>
@@ -67,5 +120,3 @@ Eigen::MatrixXd Rmatrix(const unidirected_graph<T>& G){
     
     return resist.asDiagonal();
 }
-
-find_path(const unidirected_graph<int>& T, int u, int v, )

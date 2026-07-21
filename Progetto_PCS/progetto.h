@@ -178,3 +178,4 @@ public:
         return get_componente(unidirected_edge<T>(from, to));
     }
 };
+

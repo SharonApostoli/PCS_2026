@@ -81,5 +81,14 @@ Qui in seguito una lista dei problemi riscontrati:
     per cercare nell'albero. Poi posso creare una struttura dove tengo conto del "cammino"
     fatto e cosi vedo se il cammino esiste e se esiste riesco a dire quale è il "percorso"
     da seguire.
-   
-    
+(21/07/2026)
+    Le funzioni per trovare un cammino, se esiste, seguono piu o meno il 
+    ragionamento fatto nell'es. 9 con la funzione dfs: una funzione aiuto e
+    una funzione principale, ovviamnte con le giuste modifiche.
+    Ora posso creare la funzione per trovare i cammini minimi con dfs. Poi passiamo
+    all'implementazione con De Pina.
+    Il problema è implementare il metodo dato dal progetto: cominciamo quindi con 
+    calcolare l'albero di supporto T del grafo dato. Cosi possiamo calcolare il
+    coalbero C = G \ T.
+    Ho lasciato da trovare il modo per determinare con quale nodo dovrei iniziare
+    la dfs nella recursive dfs e tutto il procedimento per calcolare i cicli.
